@@ -37,11 +37,11 @@ public final class HuskConfirmDrops extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EventListener(), this);
 
         // Register command
-        Objects.requireNonNull(getCommand("toggleconfirmdrops")).setExecutor(new ToggleCommand());
+        Objects.requireNonNull(getCommand("toggledropconfirmation")).setExecutor(new ToggleCommand());
 
         // bStats
         try {
-            Metrics metrics = new Metrics(this, METRICS_PLUGIN_ID);
+            new Metrics(this, METRICS_PLUGIN_ID);
         } catch (Exception e) {
             getLogger().warning("An exception occurred initialising metrics; skipping.");
         }

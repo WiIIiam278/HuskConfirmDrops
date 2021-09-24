@@ -18,10 +18,10 @@ public class ToggleCommand implements CommandExecutor {
         if (sender instanceof Player player) {
             if (disabledDropConfirmationPlayers.contains(player.getUniqueId())) {
                 disabledDropConfirmationPlayers.remove(player.getUniqueId());
-                HuskConfirmDrops.sendMessage(player, "toggle_confirmation_off_message");
+                HuskConfirmDrops.sendMessage(player, "toggle_confirmation_on_message");
             } else {
                 disabledDropConfirmationPlayers.add(player.getUniqueId());
-                HuskConfirmDrops.sendMessage(player, "toggle_confirmation_on_message");
+                HuskConfirmDrops.sendMessage(player, "toggle_confirmation_off_message");
             }
         } else {
             sender.spigot().sendMessage(new MineDown("[You cannot run this command from console!](#ff3300)").toComponent());
