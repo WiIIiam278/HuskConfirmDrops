@@ -15,7 +15,7 @@ public class EventListener implements Listener {
 
     private void sendCancellationNotice(Player player, Material material) {
         attemptingToDropItems.put(player.getUniqueId(), material);
-        HuskConfirmDrops.sendMessage(player, "confirmation_message");
+        HuskConfirmDrops.sendConfirmMessage(player, "confirmation_message");
         HuskConfirmDrops.playSound(player, "confirmation_sound");
     }
 

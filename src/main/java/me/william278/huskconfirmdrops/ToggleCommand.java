@@ -1,6 +1,8 @@
 package me.william278.huskconfirmdrops;
 
 import de.themoep.minedown.MineDown;
+import net.md_5.bungee.api.chat.KeybindComponent;
+import net.md_5.bungee.api.chat.TranslatableComponent;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,6 +24,7 @@ public class ToggleCommand implements CommandExecutor {
             } else {
                 disabledDropConfirmationPlayers.add(player.getUniqueId());
                 HuskConfirmDrops.sendMessage(player, "toggle_confirmation_off_message");
+
             }
         } else {
             sender.spigot().sendMessage(new MineDown("[You cannot run this command from console!](#ff3300)").toComponent());
