@@ -1,7 +1,7 @@
 name: HuskConfirmDrops
 version: '${project.version}'
 main: me.william278.huskconfirmdrops.HuskConfirmDrops
-api-version: 1.17
+api-version: 1.16
 author: William278
 description: Confirm when you need to drop an item!
 
