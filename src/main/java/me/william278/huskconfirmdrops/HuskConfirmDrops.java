@@ -3,6 +3,7 @@ package me.william278.huskconfirmdrops;
 import de.themoep.minedown.MineDown;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.KeybindComponent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -52,7 +53,7 @@ public final class HuskConfirmDrops extends JavaPlugin {
     public static void sendConfirmMessage(Player player, String messageId) {
         final String message = getInstance().getConfig().getString(messageId, "[Invalid message](#ff3300)");
         ComponentBuilder builder = new ComponentBuilder().append(new MineDown(message.split("%1%")[0]).toComponent())
-                .append(new KeybindComponent("key.drop")).reset()
+                .append(new KeybindComponent("key.drop")).append(new TextComponent()).reset()
                 .append(new MineDown(message.split("%1%")[1]).toComponent());
         player.spigot().sendMessage(builder.create());
     }
