@@ -1,0 +1,21 @@
+name: HuskConfirmDrops
+version: '${project.version}'
+main: me.william278.huskconfirmdrops.HuskConfirmDrops
+api-version: 1.17
+author: William278
+description: Confirm when you need to drop an item!
+
+permissions:
+  huskconfirmdrops.*:
+    description: Grants all HuskConfirmDrops permissions
+    default: op
+    children: [ huskconfirmdrops.command.toggle ]
+  huskconfirmdrops.command.toggle:
+    description: Lets you toggle drop confirmation
+    default: true
+commands:
+  toggledropconfirmation:
+    description: Toggles drop confirmation
+    usage: /toggledropconfirmation
+    permission: huskconfirmdrops.command.toggle
+    aliases: [ tdc ]
