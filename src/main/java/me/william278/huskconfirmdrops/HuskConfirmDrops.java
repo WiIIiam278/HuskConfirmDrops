@@ -79,6 +79,9 @@ public final class HuskConfirmDrops extends JavaPlugin {
         } catch (Exception e) {
             getLogger().warning("An exception occurred initialising metrics; skipping.");
         }
+
+        // Log
+        getLogger().info("Enabled HuskConfirmDrops v" + getDescription().getVersion());
     }
 
     public static void sendConfirmMessage(Player player, String rawMessage) {
