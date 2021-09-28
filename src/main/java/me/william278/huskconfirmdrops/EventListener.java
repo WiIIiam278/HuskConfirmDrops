@@ -19,6 +19,11 @@ public class EventListener implements Listener {
         HuskConfirmDrops.playSound(player, "confirmation_sound");
     }
 
+    // Returns if the inventory has a free slot left (prevents items getting lost)
+    private boolean doesInventoryHaveSpace(Player player) {
+        return (player.getInventory().firstEmpty() != -1);
+    }
+
     @EventHandler
     public void playerDropItemEvent(PlayerDropItemEvent e) {
         Player player = e.getPlayer();
@@ -27,12 +32,16 @@ public class EventListener implements Listener {
         }
         if (attemptingToDropItems.containsKey(e.getPlayer().getUniqueId())) {
             if (attemptingToDropItems.get(player.getUniqueId()) != e.getItemDrop().getItemStack().getType()) {
+                if (doesInventoryHaveSpace(player)) {
+                    e.setCancelled(true);
+                    sendCancellationNotice(player, e.getItemDrop().getItemStack().getType());
+                }
+            }
+        } else {
+            if (doesInventoryHaveSpace(player)) {
                 e.setCancelled(true);
                 sendCancellationNotice(player, e.getItemDrop().getItemStack().getType());
             }
-        } else {
-            e.setCancelled(true);
-            sendCancellationNotice(player, e.getItemDrop().getItemStack().getType());
         }
     }
 
