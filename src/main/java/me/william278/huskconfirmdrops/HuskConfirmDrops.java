@@ -1,14 +1,20 @@
 package me.william278.huskconfirmdrops;
 
 import de.themoep.minedown.MineDown;
+import me.william278.huskconfirmdrops.command.ToggleCommand;
+import me.william278.huskconfirmdrops.config.Settings;
+import me.william278.huskconfirmdrops.database.Database;
+import me.william278.huskconfirmdrops.database.MySQL;
+import me.william278.huskconfirmdrops.database.SQLite;
+import me.william278.huskconfirmdrops.listener.EventListener;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.KeybindComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bstats.bukkit.Metrics;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.Connection;
 import java.util.Objects;
 
 public final class HuskConfirmDrops extends JavaPlugin {
@@ -19,6 +25,14 @@ public final class HuskConfirmDrops extends JavaPlugin {
     private static HuskConfirmDrops instance;
     public static HuskConfirmDrops getInstance() {
         return instance;
+    }
+
+    private static Database database;
+    public static Connection getConnection() { return database.getConnection(); }
+
+    private static Settings settings;
+    public static Settings getSettings() {
+        return settings;
     }
 
     @Override
@@ -35,6 +49,14 @@ public final class HuskConfirmDrops extends JavaPlugin {
         saveDefaultConfig();
         saveConfig();
         reloadConfig();
+        settings = new Settings(getConfig());
+
+        // Initialize database
+        database = switch (getSettings().getDatabaseType()) {
+            case MYSQL -> new MySQL(this);
+            case SQLITE -> new SQLite(this);
+        };
+        database.load();
 
         // Register event
         getServer().getPluginManager().registerEvents(new EventListener(), this);
@@ -50,21 +72,10 @@ public final class HuskConfirmDrops extends JavaPlugin {
         }
     }
 
-    public static void sendConfirmMessage(Player player, String messageId) {
-        final String message = getInstance().getConfig().getString(messageId, "[Invalid message](#ff3300)");
-        ComponentBuilder builder = new ComponentBuilder().append(new MineDown(message.split("%1%")[0]).toComponent())
+    public static void sendConfirmMessage(Player player, String rawMessage) {
+        ComponentBuilder builder = new ComponentBuilder().append(new MineDown(rawMessage.split("%1%")[0]).toComponent())
                 .append(new KeybindComponent("key.drop")).append(new TextComponent()).reset()
-                .append(new MineDown(message.split("%1%")[1]).toComponent());
+                .append(new MineDown(rawMessage.split("%1%")[1]).toComponent());
         player.spigot().sendMessage(builder.create());
-    }
-
-    public static void sendMessage(Player player, String messageId) {
-        final String message = getInstance().getConfig().getString(messageId, "[Invalid message](#ff3300)");
-        player.spigot().sendMessage(new MineDown(message).toComponent());
-    }
-
-    public static void playSound(Player player, String soundId) {
-        final String sound = getInstance().getConfig().getString(soundId, "BLOCK_NOTE_BLOCK_BANJO");
-        player.playSound(player.getLocation(), Sound.valueOf(sound), 1F, 1F);
     }
 }

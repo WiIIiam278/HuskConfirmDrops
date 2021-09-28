@@ -1,4 +1,15 @@
-confirmation_message: '[Press](#00fb9a) &#00fb9a&&l%1%&r [again to drop this item.](#00fb9a)'
-confirmation_sound: BLOCK_NOTE_BLOCK_BANJO
-toggle_confirmation_off_message: '[Toggled drop confirmation](#00fb9a) [off](#00fb9a bold)'
-toggle_confirmation_on_message: '[Toggled drop confirmation](#00fb9a) [on](#00fb9a bold)'
+database:
+  type: sqlite
+  mysql_credentials:
+    host: localhost
+    port: 3306
+    database: HuskConfirmDrops
+    username: root
+    password: pa55w0rd
+    table_name: huskconfirmdrops_data
+    params: '?autoReconnect=true&useSSL=false'
+messages:
+  confirmation_message: '[Press](#00fb9a) &#00fb9a&&l%1%&r [again to drop this item.](#00fb9a)'
+  confirmation_sound: BLOCK_NOTE_BLOCK_BANJO
+  toggle_confirmation_off_message: '[Toggled drop confirmation](#00fb9a) [off](#00fb9a bold)'
+  toggle_confirmation_on_message: '[Toggled drop confirmation](#00fb9a) [on](#00fb9a bold)'

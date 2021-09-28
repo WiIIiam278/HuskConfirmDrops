@@ -1,8 +1,8 @@
-package me.william278.huskconfirmdrops;
+package me.william278.huskconfirmdrops.command;
 
 import de.themoep.minedown.MineDown;
-import net.md_5.bungee.api.chat.KeybindComponent;
-import net.md_5.bungee.api.chat.TranslatableComponent;
+import me.william278.huskconfirmdrops.HuskConfirmDrops;
+import me.william278.huskconfirmdrops.database.DataManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,10 +20,12 @@ public class ToggleCommand implements CommandExecutor {
         if (sender instanceof Player player) {
             if (disabledDropConfirmationPlayers.contains(player.getUniqueId())) {
                 disabledDropConfirmationPlayers.remove(player.getUniqueId());
-                HuskConfirmDrops.sendMessage(player, "toggle_confirmation_on_message");
+                sender.spigot().sendMessage(new MineDown(HuskConfirmDrops.getSettings().getToggleConfirmationOnMessage()).toComponent());
+                DataManager.setPlayerToggle(player.getUniqueId(), true);
             } else {
                 disabledDropConfirmationPlayers.add(player.getUniqueId());
-                HuskConfirmDrops.sendMessage(player, "toggle_confirmation_off_message");
+                sender.spigot().sendMessage(new MineDown(HuskConfirmDrops.getSettings().getToggleConfirmationOffMessage()).toComponent());
+                DataManager.setPlayerToggle(player.getUniqueId(), false);
 
             }
         } else {

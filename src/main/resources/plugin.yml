@@ -4,6 +4,7 @@ main: me.william278.huskconfirmdrops.HuskConfirmDrops
 api-version: 1.16
 author: William278
 description: Confirm when you need to drop an item!
+libraries: [mysql:mysql-connector-java:8.0.25]
 
 permissions:
   huskconfirmdrops.*:
