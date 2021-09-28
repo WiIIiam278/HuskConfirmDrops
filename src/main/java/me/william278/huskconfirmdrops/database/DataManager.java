@@ -55,6 +55,7 @@ public class DataManager {
             try (PreparedStatement statement = connection.prepareStatement("UPDATE " + HuskConfirmDrops.getSettings().getMySqlTableName() + " SET `confirm_drops`=? WHERE `uuid`=?;")) {
                 statement.setBoolean(1, toggleValue);
                 statement.setString(2, uuid.toString());
+                statement.executeUpdate();
             } catch (SQLException e) {
                 plugin.getLogger().log(Level.WARNING, "An SQL exception occurred updating player drop confirmation toggle data on the database: ", e);
             }
