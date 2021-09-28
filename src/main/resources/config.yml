@@ -1,3 +1,8 @@
+#  ------------------------------
+# |    HuskConfirmDrops Config   |
+# |    Developed by William278   |
+#  ------------------------------
+
 database:
   type: sqlite
   mysql_credentials:

@@ -10,13 +10,20 @@ permissions:
   huskconfirmdrops.*:
     description: Grants all HuskConfirmDrops permissions
     default: op
-    children: [ huskconfirmdrops.command.toggle ]
+    children: [ huskconfirmdrops.command.toggle, huskconfirmdrops.command.huskconfirmdrops ]
   huskconfirmdrops.command.toggle:
     description: Lets you toggle drop confirmation
     default: true
+  huskconfirmdrops.command.huskconfirmdrops:
+    description: Lets you view plugin information
+    default: op
 commands:
   toggledropconfirmation:
     description: Toggles drop confirmation
     usage: /toggledropconfirmation
     permission: huskconfirmdrops.command.toggle
     aliases: [ tdc ]
+  huskconfirmdrops:
+    description: View plugin information
+    usage: /huskconfirmrops <about/reload>
+    permission: huskconfirmdrops.command.huskconfirmdrops

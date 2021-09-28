@@ -1,6 +1,7 @@
 package me.william278.huskconfirmdrops;
 
 import de.themoep.minedown.MineDown;
+import me.william278.huskconfirmdrops.command.AdminCommand;
 import me.william278.huskconfirmdrops.command.ToggleCommand;
 import me.william278.huskconfirmdrops.config.Settings;
 import me.william278.huskconfirmdrops.database.Database;
@@ -35,6 +36,14 @@ public final class HuskConfirmDrops extends JavaPlugin {
         return settings;
     }
 
+    public void reloadSettingsFromConfig() {
+        getConfig().options().copyDefaults(true);
+        saveDefaultConfig();
+        saveConfig();
+        reloadConfig();
+        settings = new Settings(getConfig());
+    }
+
     @Override
     public void onLoad() {
         instance = this;
@@ -45,11 +54,7 @@ public final class HuskConfirmDrops extends JavaPlugin {
         // Plugin startup logic
 
         // Config setup
-        getConfig().options().copyDefaults(true);
-        saveDefaultConfig();
-        saveConfig();
-        reloadConfig();
-        settings = new Settings(getConfig());
+        reloadSettingsFromConfig();
 
         // Initialize database
         database = switch (getSettings().getDatabaseType()) {
@@ -61,10 +66,14 @@ public final class HuskConfirmDrops extends JavaPlugin {
         // Register event
         getServer().getPluginManager().registerEvents(new EventListener(), this);
 
-        // Register command
+        // Register commands
         Objects.requireNonNull(getCommand("toggledropconfirmation")).setExecutor(new ToggleCommand());
+        Objects.requireNonNull(getCommand("huskconfirmdrops")).setExecutor(new AdminCommand());
 
-        // bStats
+        // Register tab completer
+        Objects.requireNonNull(getCommand("huskconfirmdrops")).setTabCompleter(new AdminCommand.AdminTabCompleter());
+
+        // bStats metrics setup
         try {
             new Metrics(this, METRICS_PLUGIN_ID);
         } catch (Exception e) {
